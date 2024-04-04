@@ -16,14 +16,10 @@ def remove_outliers(df, column_names):
 
 def process_file(filename):
     filepath = os.path.join(data_dir, filename)
-    # Read the CSV file
     df = pd.read_csv(filepath)
-    # Calculate basic statistics
     summary_stats = df.describe()
-    # You can print or save the summary statistics if needed
     print("Summary statistics for", filename)
     print(summary_stats)
-    # Clean the data by removing outliers
     cleaned_df = remove_outliers(df, df.columns[1:])
     return cleaned_df
 
@@ -33,12 +29,10 @@ cleaned_data = []
 for filename in gt_df['H'].dropna():
     try:
         cleaned_df = process_file(filename)
-        # Append cleaned data to the list
+        # append cleaned data to the list
         cleaned_data.append(cleaned_df)
     except Exception as e:
         print(f"Error processing file {filename}: {e}")
 
 # Concatenate all cleaned dataframes if you need one single dataframe
 final_dataset = pd.concat(cleaned_data, ignore_index=True)
-
-# Now, final_dataset is ready for further processing or model training
